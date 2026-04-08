@@ -214,3 +214,57 @@ export const ResonanceVisual = () => {
     </div>
   );
 };
+
+export const CapacitorWaveform = () => {
+  return (
+    <div className="relative w-full h-40 bg-slate-50 rounded-xl border border-slate-200 p-4 flex flex-col items-center justify-center overflow-hidden">
+      <div className="absolute top-2 left-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Phase Relation (i leads v by 90&deg;)</div>
+      <svg viewBox="0 0 200 100" className="w-full h-full">
+        <defs>
+          <clipPath id="graphClip">
+            <rect x="10" y="0" width="190" height="100" />
+          </clipPath>
+        </defs>
+        
+        {/* Axes */}
+        <line x1="10" y1="50" x2="190" y2="50" stroke="#cbd5e1" strokeWidth="1" />
+        <line x1="10" y1="10" x2="10" y2="90" stroke="#cbd5e1" strokeWidth="1" />
+        
+        {/* Voltage Wave (sin) */}
+        <motion.path
+          d="M 10 50 Q 30 10, 50 50 T 90 50 T 130 50 T 170 50 T 210 50"
+          fill="none"
+          stroke="#ef4444"
+          strokeWidth="2"
+          clipPath="url(#graphClip)"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
+        />
+        
+        {/* Current Wave (cos) -> leads voltage by 90 degrees (shifted left by 20 units) */}
+        <motion.path
+          d="M -10 50 Q 10 10, 30 50 T 70 50 T 110 50 T 150 50 T 190 50 T 230 50"
+          fill="none"
+          stroke="#3b82f6"
+          strokeWidth="2"
+          strokeDasharray="4 2"
+          clipPath="url(#graphClip)"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
+        />
+
+        {/* Legend */}
+        <g transform="translate(140, 10)">
+          <line x1="0" y1="0" x2="10" y2="0" stroke="#ef4444" strokeWidth="2" />
+          <text x="15" y="3" fontSize="8" fill="#ef4444" className="font-bold">v(t)</text>
+          
+          <line x1="0" y1="12" x2="10" y2="12" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4 2" />
+          <text x="15" y="15" fontSize="8" fill="#3b82f6" className="font-bold">i(t)</text>
+        </g>
+      </svg>
+    </div>
+  );
+};
+
