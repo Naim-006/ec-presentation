@@ -6,7 +6,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronRight, ChevronLeft, Info, Presentation, Monitor, BookOpen, Video, VideoOff, Circle, Settings, X } from "lucide-react";
-import { ACWaveform, RLCIcons, FrequencyMeter, FormulaDisplay, ComparisonTable, ResonanceVisual } from "./components/Visuals";
+import { ACWaveform, RLCIcons, FrequencyMeter, FormulaDisplay, ComparisonTable, ResonanceVisual, CapacitorWaveform } from "./components/Visuals";
 
 const slides = [
   {
@@ -71,17 +71,20 @@ const slides = [
     speaker: "Naim Hossain",
     subtitle: "Frequency Effect on Capacitance",
     bullets: [
-      { id: 1, text: "Fundamental Equation: i = C (dv/dt)", formula: "i = C (dv/dt)" },
-      { id: 2, text: "Capacitive Reactance: XC = 1/(ωC) = 1/(2πfC)", formula: "XC = 1/(2πfC)" },
-      { id: 3, text: "Analysis: XC ∝ 1/f (Inversely Proportional)", highlight: true },
-      { id: 4, text: "Higher Frequency → Lower XC (Less opposition to current)" },
-      { id: 5, text: "Impact: Transmission line shunt capacitance & Capacitor banks" },
-      { id: 6, text: "Frequency change alters Power Factor Correction efficiency" },
+      { id: 1, text: "Fundamental Equation: i(t) = C (dv(t)/dt)", formula: "i = C (dv/dt)" },
+      { id: 2, text: "Applying AC Voltage: v(t) = Vm sin(ωt)" },
+      { id: 3, text: "Current Derived: i(t) = ωC Vm sin(ωt + 90°)", formula: "i(t) = ωC Vm sin(ωt + 90°)" },
+      { id: 4, text: "Capacitive Reactance: XC = 1/(ωC) = 1/(2πfC)", formula: "XC = 1/(2πfC)" },
+      { id: 5, text: "Analysis: XC ∝ 1/f (Inversely Proportional)", highlight: true },
+      { id: 6, text: "Frequency Increase → Reactance Decreases → Current Increases" },
+      { id: 7, text: "Frequency Decrease → Reactance Increases → Current Decreases" },
+      { id: 8, text: "Impact: Capacitor banks, Shunt capacitance & Voltage regulation" },
     ],
     notes: [
-      { title: "Capacitor", content: "Capacitors behave opposite to inductors. They oppose changes in voltage." },
-      { title: "Math", content: "XC is inversely proportional to frequency. High frequency makes capacitors act like short circuits." },
-      { title: "Impact", content: "This affects how we compensate for reactive power in long transmission lines." },
+      { title: "Opening", content: "A capacitor stores electrical energy and opposes the change in voltage." },
+      { title: "Derivation", content: "If v(t) is Vm sin(ωt), its derivative is proportional to ω. Thus, the current i(t) leads voltage by 90° and is proportional to frequency." },
+      { title: "Reactance", content: "XC is inversely proportional to frequency. At high frequency, it allows more current. At low frequency, it resists more." },
+      { title: "Power Systems", content: "If system frequency changes, capacitor bank reactance changes—affecting reactive power supplied and voltage recovery." },
     ],
     visualType: "capacitor"
   },
@@ -366,9 +369,9 @@ export default function App() {
         );
       case "capacitor":
         return (
-          <div className="space-y-8">
+          <div className="space-y-6">
             <FormulaDisplay title="Capacitive Reactance" formula="XC = 1/(2πfC)" relation="XC ∝ 1/f" />
-            <FormulaDisplay title="Current Equation" formula="i = C (dv/dt)" />
+            <CapacitorWaveform />
           </div>
         );
       case "resonance":
@@ -778,6 +781,16 @@ export default function App() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Global Progress Bar */}
+        <div className="absolute bottom-0 left-0 h-1.5 w-full bg-slate-200 z-20">
+          <motion.div 
+            className="h-full bg-blue-600 rounded-r-full shadow-[0_0_8px_rgba(37,99,235,0.6)]"
+            initial={{ width: 0 }}
+            animate={{ width: `${(currentSlide / (slides.length - 1)) * 100}%` }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          />
+        </div>
       </div>
 
       {/* Instructions for Preview */}
