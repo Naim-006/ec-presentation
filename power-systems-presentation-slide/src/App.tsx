@@ -75,7 +75,7 @@ const slides = [
         { id: 2, text: "Rearranging: dv = (i/C) dt", formula: "dv = (i/C) dt" },
        { id: 3, text: "Applying AC Voltage: v(t) = Vm sin(ωt)" },
        { id: 4, text: "Integrating both sides: v = (1/C) ∫ i dt", formula: "v = (1/C) ∫ i dt" },
-      { id: 5, text: "Current Derived: i(t) = ωC Vm sin(ωt + 90°)", formula: "i(t) = ωC Vm sin(ωt + 90°)" },
+      { id: 5, text: "Current Derived: i(t) = Im sin(ωt + 90°)", formula: "i(t) = ωC Vm sin(ωt + 90°)" },
       { id: 6, text: "Capacitive Reactance: XC = 1/(ωC) = 1/(2πfC)", formula: "XC = 1/(2πfC)" },
       { id: 7, text: "Analysis: XC ∝ 1/f (Inversely Proportional)", highlight: true },
       { id: 8, text: "Frequency Increase → Reactance Decreases → Current Increases" },
